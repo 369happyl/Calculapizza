@@ -15,7 +15,7 @@
         body {
             background-color: #000;
             color: #fff;
-            height: 100vh; /* Mudado para vh fixo para evitar bugs em editores */
+            height: 100vh; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,10 +25,10 @@
         .calculator {
     width: 100%;
     max-width: 450px;
-    height: 100dvh; /* Ajuste dinâmico para telas de celular */
+    height: 100dvh; 
     display: flex;
     flex-direction: column;
-    padding: 40px 15px 10px 15px; /* 40px no topo já é o suficiente */
+    padding: 40px 15px 10px 15px; 
     box-sizing: border-box;
 }
 
@@ -39,11 +39,10 @@
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
-    margin-bottom: 20px; /* Afasta a pizza do número */
+    margin-bottom: 20px; 
 }
 
-        /* Pizza CSS - Tamanho levemente reduzido para ganhar espaço */
-        .pizza-icon {
+                .pizza-icon {
             width: 70px;
             height: 70px;
             background-color: #f4d03f;
@@ -69,12 +68,12 @@
         .icons-right { color: #4a6e4a; font-size: 18px; }
         .icons-right span { margin-left: 10px; }
 
-        /* Display - Corrigido para não cortar */
+        
         .display-area {
-    flex: 1; /* Ocupa o espaço central */
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Traz o número para perto dos botões */
+    justify-content: flex-end; 
     align-items: flex-end;
     padding: 10px 0;
 }
@@ -87,11 +86,11 @@
         }
 
         #result {
-            font-size: clamp(2rem, 12vw, 3.5rem); /* Diminuído levemente */
+            font-size: clamp(2rem, 12vw, 3.5rem);
             color: #fff;
             text-align: right;
             width: 100%;
-            line-height: 1.2; /* Aumentado para não cortar o topo dos números */
+            line-height: 1.2; 
             word-break: break-all;
         }
 
@@ -100,13 +99,13 @@
             color: #65e076 !important;
         }
 
-        /* Teclado - Mais compacto */
+        
 .keypad {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px; /* Espaço menor entre botões */
-    padding-bottom: 20px; /* Margem de segurança para não bater na borda do celular */
-    flex-shrink: 0; /* Impede que os botões diminuam ou sumam */
+    gap: 8px; 
+    padding-bottom: 20px; 
+    flex-shrink: 0; 
 }
 
 
@@ -201,7 +200,6 @@
             8: "6 azeitonas e 2 queijos",
             9: "999999999999999999999999",
             10: "10 pizzas è melhor q uma",
-            // Inventados de 11 a 49
             11: "11 bordas recheadas",
             12: "12 fatias de bacon",
             13: "13 azeitonas da sorte",
@@ -242,7 +240,7 @@
             48: "48 horas fermentando",
             49: "Quase 50 calabresas",
             50: "50 slk",
-            51: "51 moroboys empinando"
+            51: "51 motoboys empinando"
              };
 
         function appendNumber(num) {
@@ -251,8 +249,7 @@
                 justCalculated = false;
                 resultDisplay.classList.remove('long-text');
             }
-            // Evitar múltiplos zeros no início
-            if (currentExpression === '0' && num !== '.') {
+                        if (currentExpression === '0' && num !== '.') {
                 currentExpression = num;
             } else {
                 currentExpression += num;
@@ -262,18 +259,14 @@
 
         function appendOperator(op) {
             if (justCalculated) {
-                // Se acabou de calcular, usa o resultado anterior (mas precisa ser o número real, não o texto da pizza)
-                // Como o display mostra o texto, precisamos manter o valor numérico interno se quiséssemos continuar a conta complexa.
-                // Para simplificar essa lógica da "calculadora maluca", vamos resetar se for texto.
-                if (resultDisplay.classList.contains('long-text')) {
-                    currentExpression = ''; // Começa do zero se o último resultado foi texto maluco
+                   if (resultDisplay.classList.contains('long-text')) {
+                    currentExpression = ''; 
                 }
                 justCalculated = false;
                 resultDisplay.classList.remove('long-text');
             }
             
-            // Troca visual dos operadores
-            let displayOp = op;
+               let displayOp = op;
             if (op === '*') displayOp = '×';
             if (op === '/') displayOp = '÷';
             
@@ -290,8 +283,7 @@
 
         function toggleSign() {
             if (currentExpression) {
-                // Lógica simples de inversão
-                if (currentExpression.startsWith('-')) {
+                     if (currentExpression.startsWith('-')) {
                     currentExpression = currentExpression.substring(1);
                 } else {
                     currentExpression = '-' + currentExpression;
@@ -305,21 +297,17 @@
         }
 
         function getPizzaPhrase(num) {
-            // Se for negativo, trata como positivo para pegar a frase
-            let n = Math.abs(num);
+              let n = Math.abs(num);
             
-            // Se for flutuante, arredonda para baixo para simplificar
-            n = Math.floor(n);
+                       n = Math.floor(n);
 
-            if (n < 50) {
+            if (n < 52) {
                 return funnyMap[n] || n;
             } else {
-                // Lógica para >= 50: Separar dígitos
-                // Ex: 50 -> "4+1 que legal e 0"
                 let digits = n.toString().split('');
                 let phraseParts = digits.map(d => {
                     let digitNum = parseInt(d);
-                    return funnyMap[digitNum]; // Usa o mapa de 0-9
+                    return funnyMap[digitNum];
                 });
                 return phraseParts.join(' e ');
             }
@@ -327,30 +315,21 @@
 
         function calculate() {
             try {
-                // Avalia a expressão matemática
-                // Substitui × e ÷ pelos operadores JS
+                
                 let evalString = currentExpression.replace(/×/g, '*').replace(/÷/g, '/');
                 
-                // Cuidado com eval em produção, mas ok para exercício simples
-                let result = eval(evalString);
+                   let result = eval(evalString);
 
-                // Mostra a conta no histórico
-                historyDisplay.innerText = currentExpression;
+                         historyDisplay.innerText = currentExpression;
 
-                // Lógica Maluca
-                let finalOutput;
+                         let finalOutput;
                 
-                // Se o resultado for um número válido
-                if (!isNaN(result) && isFinite(result)) {
-                    // Verifica se é inteiro para aplicar as frases (float ignora ou arredonda)
-                    if (Number.isInteger(result)) {
+                       if (!isNaN(result) && isFinite(result)) {
+                           if (Number.isInteger(result)) {
                         finalOutput = getPizzaPhrase(result);
                         resultDisplay.classList.add('long-text');
                     } else {
-                        // Se for decimal (ex: 2.5), mostra o número normal ou arredonda?
-                        // O prompt não especificou, vamos arredondar para aplicar a lógica
-                        // ou mostrar normal. Vamos mostrar a lógica arredondada:
-                        let rounded = Math.round(result);
+                           let rounded = Math.round(result);
                         finalOutput = getPizzaPhrase(rounded);
                         resultDisplay.classList.add('long-text');
                     }
@@ -359,7 +338,7 @@
                 }
 
                 updateDisplay(finalOutput);
-                currentExpression = result.toString(); // Guarda o número real para contas futuras
+                currentExpression = result.toString();  
                 justCalculated = true;
 
             } catch (e) {
